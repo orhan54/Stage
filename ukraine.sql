@@ -1,10 +1,9 @@
 CREATE TABLE Departement(
    Id_departement INT AUTO_INCREMENT,
-   departement_code TINYINT,
+   departement_code INT,
    departement_nom VARCHAR(150) ,
    departement_nom_uppercase VARCHAR(150) ,
    departement_slug VARCHAR(120) ,
-   departement_nom_soundex VARCHAR(100) ,
    PRIMARY KEY(Id_departement)
 );
 
@@ -18,7 +17,11 @@ CREATE TABLE Accompagne(
 
 CREATE TABLE VilleFR(
    Id_villeFR INT AUTO_INCREMENT,
-   ville_nom_france VARCHAR(250) ,
+   ville_departement INT,
+   ville_nom VARCHAR(200) ,
+   ville_nom_simple VARCHAR(200) ,
+   ville_nom_reel VARCHAR(200) ,
+   ville_code_postal INT,
    Id_departement INT NOT NULL,
    PRIMARY KEY(Id_villeFR),
    FOREIGN KEY(Id_departement) REFERENCES Departement(Id_departement)
@@ -26,7 +29,7 @@ CREATE TABLE VilleFR(
 
 CREATE TABLE Hebergement(
    Id_hebergement INT AUTO_INCREMENT,
-   hebergement_adresse VARCHAR(250) ,
+   hebergement_adresse VARCHAR(255) ,
    hebergement_nom VARCHAR(150) ,
    hebergement_detail TEXT,
    Id_villeFR INT NOT NULL,
@@ -39,13 +42,17 @@ CREATE TABLE Association(
    association_nom VARCHAR(150) ,
    association_president VARCHAR(200) ,
    association_telephone VARCHAR(50) ,
-   association_email VARCHAR(250) ,
+   association_email VARCHAR(255) ,
    association_date DATE,
-   association_facebook VARCHAR(250) ,
-   association_instagram VARCHAR(250) ,
-   association_telegram VARCHAR(250) ,
-   association_description_FR VARCHAR(250) ,
-   association_description_UA VARCHAR(250) ,
+   association_facebook VARCHAR(255) ,
+   association_instagram VARCHAR(255) ,
+   association_telegram VARCHAR(255) ,
+   association_description_FR TEXT,
+   association_siret INT,
+   association_site_web VARCHAR(255) ,
+   association_logo VARCHAR(255) ,
+   association_photo VARCHAR(255) ,
+   association_mp VARCHAR(255) ,
    Id_villeFR INT NOT NULL,
    PRIMARY KEY(Id_association),
    FOREIGN KEY(Id_villeFR) REFERENCES VilleFR(Id_villeFR)
@@ -54,7 +61,7 @@ CREATE TABLE Association(
 CREATE TABLE TypeReseau(
    Id_type_reseau INT AUTO_INCREMENT,
    type_nom VARCHAR(150) ,
-   type_chemin VARCHAR(250) ,
+   type_chemin VARCHAR(255) ,
    type_icon VARCHAR(50) ,
    PRIMARY KEY(Id_type_reseau)
 );
@@ -65,24 +72,32 @@ CREATE TABLE TypeMedia(
    PRIMARY KEY(Id_type_media)
 );
 
+CREATE TABLE TypeUser(
+   Id_TypeUser INT AUTO_INCREMENT,
+   type_nom VARCHAR(120) ,
+   PRIMARY KEY(Id_TypeUser)
+);
+
 CREATE TABLE Users(
    Id_user INT AUTO_INCREMENT,
    user_nom VARCHAR(150) ,
    user_prenom VARCHAR(150) ,
-   user_email VARCHAR(250) ,
+   user_email VARCHAR(255) ,
    user_telephone VARCHAR(50) ,
    user_naissance DATE,
    user_arriver_france DATE,
-   user_langue_francaise VARCHAR(150) ,
-   user_experience VARCHAR(150) ,
-   user_niveau_etude VARCHAR(150) ,
-   user_dernier_poste_ukraine VARCHAR(200) ,
-   user_dernier_poste_france VARCHAR(200) ,
    user_ville_ukraine VARCHAR(200) ,
-   user_pseudonyme VARCHAR(200) ,
+   user_langue_francaise VARCHAR(150) ,
+   user_niveau_etude VARCHAR(150) ,
+   user_dernier_poste_ukraine VARCHAR(150) ,
+   user_dernier_poste_france VARCHAR(150) ,
+   user_experience VARCHAR(150) ,
+   user_pseudonyme VARCHAR(255) ,
    user_mp VARCHAR(255) ,
+   Id_TypeUser INT NOT NULL,
    Id_villeFR INT NOT NULL,
    PRIMARY KEY(Id_user),
+   FOREIGN KEY(Id_TypeUser) REFERENCES TypeUser(Id_TypeUser),
    FOREIGN KEY(Id_villeFR) REFERENCES VilleFR(Id_villeFR)
 );
 

@@ -2,125 +2,199 @@
 
 namespace App\model\Entity;
 
-class AssociationEntity extends AbstractEntity {
+class AssociationEntity extends AbstractEntity
+{
     private int $id;
     private string $nomAssociation;
     private string $nomPresident;
-    private string $adresseEmail;
-    private string $numeroSiret;
     private string $telephone;
-    private string $instagram;
+    private string $adresseEmail;
+    private string $dateInscription;
     private string $facebook;
+    private string $instagram;
     private string $telegram;
-    private string $siteWeb;
-    private string $logoAssociation;
-    private string $photoAssociation;
+    private string $descriptionFR;
+    private string $associationSiret;
+    private string $associationSiteWeb;
+    private string $associationLogo;
+    private string $associationPhoto;
+    private string $associationMp;
+    private int $idVilleFR;
 
-    public function setId(int $id): self {
+    public function setId(int $id): self
+    {
         $this->id = $id;
         return $this;
     }
 
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function setNomAssociation(string $nomAssociation): self {
+    public function getAssociationNom(): string
+    {
+        return $this->nomAssociation;
+    }
+
+    public function setAssociationNom(string $nomAssociation): self
+    {
         $this->nomAssociation = $nomAssociation;
         return $this;
     }
 
-    public function getNomAssociation(): string {
-        return $this->nomAssociation;
+    public function getAssociationPresident(): string
+    {
+        return $this->nomPresident;
     }
 
-    public function setNomPresident(string $nomPresident): self {
+    public function setAssociationPresident(string $nomPresident): self
+    {
         $this->nomPresident = $nomPresident;
         return $this;
     }
 
-    public function getNomPresident(): string {
-        return $this->nomPresident;
+    public function getAssociationTelephone(): string
+    {
+        return $this->telephone;
     }
 
-    public function setAdresseEmail(string $adresseEmail): self {
-        $this->adresseEmail = $adresseEmail;
-        return $this;
-    }
-
-    public function getAdresseEmail(): string {
-        return $this->adresseEmail;
-    }
-
-    public function setNumeroSiret(string $numeroSiret): self {
-        $this->numeroSiret = $numeroSiret;
-        return $this;
-    }
-
-    public function getNumeroSiret(): string {
-        return $this->numeroSiret;
-    }
-
-    public function setTelephone(string $telephone): self {
+    public function setAssociationTelephone(string $telephone): self
+    {
         $this->telephone = $telephone;
         return $this;
     }
 
-    public function getTelephone(): string {
-        return $this->telephone;
+    public function getAssociationEmail(): string
+    {
+        return $this->adresseEmail;
     }
 
-    public function setInstagram(string $instagram): self {
-        $this->instagram = $instagram;
+    public function setAssociationEmail(string $adresseEmail): self
+    {
+        $this->adresseEmail = $adresseEmail;
         return $this;
     }
 
-    public function getInstagram(): string {
-        return $this->instagram;
+    public function getAssociationDate(): string
+    {
+        return $this->dateInscription;
     }
 
-    public function setFacebook(string $facebook): self {
+    public function setAssociationDate(string $dateInscription): self
+    {
+        $this->dateInscription = $dateInscription;
+        return $this;
+    }
+
+    public function getAssociationFacebook(): string
+    {
+        return $this->facebook;
+    }
+
+    public function setAssociationFacebook(string $facebook): self
+    {
         $this->facebook = $facebook;
         return $this;
     }
 
-    public function getFacebook(): string {
-        return $this->facebook;
+    public function getAssociationInstagram(): string
+    {
+        return $this->instagram;
     }
 
-    public function setTelegram(string $telegram): self {
+    public function setAssociationInstagram(string $instagram): self
+    {
+        $this->instagram = $instagram;
+        return $this;
+    }
+
+    public function getAssociationTelegram(): string
+    {
+        return $this->telegram;
+    }
+
+    public function setAssociationTelegram(string $telegram): self
+    {
         $this->telegram = $telegram;
         return $this;
     }
 
-    public function getTelegram(): string {
-        return $this->telegram;
+    public function getAssociationDescriptionFR(): string
+    {
+        return $this->descriptionFR;
     }
 
-    public function setSiteWeb(string $siteWeb): self {
-        $this->siteWeb = $siteWeb;
+    public function setAssociationDescriptionFR(string $descriptionFR): self
+    {
+        $this->descriptionFR = $descriptionFR;
         return $this;
     }
 
-    public function getSiteWeb(): string {
-        return $this->siteWeb;
+    public function getAssociationSiret(): string
+    {
+        return $this->associationSiret;
     }
 
-    public function setLogoAssociation(string $logoAssociation): self {
-        $this->logoAssociation = $logoAssociation;
+    public function setAssociationSiret(string $associationSiret): self
+    {
+        $this->associationSiret = $associationSiret;
         return $this;
     }
 
-    public function getLogoAssociation(): string {
-        return $this->logoAssociation;
+    public function getAssociationSiteWeb(): string
+    {
+        return $this->associationSiteWeb;
     }
 
-    public function setPhotoAssociation(string $photoAssociation): self {
-        $this->photoAssociation = $photoAssociation;
+    public function setAssociationSiteWeb(string $associationSiteWeb): self
+    {
+        $this->associationSiteWeb = $associationSiteWeb;
         return $this;
     }
 
-    public function getPhotoAssociation(): string {
-        return $this->photoAssociation;
+    public function getAssociationLogo(): string
+    {
+        return $this->associationLogo;
     }
+
+    public function setAssociationLogo(string $associationLogo): self
+    {
+        $this->associationLogo = $associationLogo;
+        return $this;
+    }
+
+    public function getAssociationPhoto(): string
+    {
+        return $this->associationPhoto;
+    }
+
+    public function setAssociationPhoto(string $associationPhoto): self
+    {
+        $this->associationPhoto = $associationPhoto;
+        return $this;
+    }
+
+    public function getAssociationMp(): string
+    {
+        return $this->associationMp;
+    }
+
+    public function setAssociationMp(string $associationMp): self
+    {
+        $this->associationMp = $associationMp;
+        return $this;
+    }
+
+    public function getIdVilleFR(): int
+    {
+        return $this->idVilleFR;
+    }
+
+    public function setIdVilleFR(int $idVilleFR): self
+    {
+        $this->idVilleFR = $idVilleFR;
+        return $this;
+    }
+
 }

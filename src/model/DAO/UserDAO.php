@@ -13,7 +13,7 @@ class UserDAO implements DAOInterface
     {
         try {
             $db = Database::getInstance();
-            $query = $db->prepare("SELECT Id_villeFR FROM VilleFR WHERE ville_nom_france = ?");
+            $query = $db->prepare("SELECT Id_villeFR FROM VilleFR WHERE ville_nom = ?"); // Utilisation de 'ville_nom'
             $query->execute([$ville]);
             $result = $query->fetch(\PDO::FETCH_ASSOC);
 
@@ -21,7 +21,7 @@ class UserDAO implements DAOInterface
                 return (int)$result['Id_villeFR'];
             } else {
                 // Si la ville n'existe pas, insérez-la dans la base de données
-                $insertQuery = $db->prepare("INSERT INTO VilleFR (ville_nom_france, Id_departement) VALUES (?, ?)");
+                $insertQuery = $db->prepare("INSERT INTO VilleFR (ville_nom, Id_departement) VALUES (?, ?)");
                 $insertQuery->execute([$ville, 1]); // Remplacez 1 par l'ID du département par défaut
                 return (int)$db->lastInsertId();
             }
@@ -37,23 +37,9 @@ class UserDAO implements DAOInterface
         try {
             $db = Database::getInstance();
 
-            // Si l'ID de la ville est 0, essayez de le récupérer à partir du nom de la ville
-            if ($user->getIdVilleFR() === 0 && !empty($user->getUserVilleUkraine())) {
-                $query = $db->prepare("SELECT ville_nom_france FROM VilleFR WHERE Id_villeFR = ?");
-                $query->execute([$user->getUserVilleUkraine()]);
-                $ville = $query->fetch(\PDO::FETCH_ASSOC);
+            // Définir une valeur par défaut pour Id_TypeUser si elle est manquante
+            $idTypeUser = $user->getIdTypeUser() ?: 1; 
 
-                if (!$ville) {
-                    // Insérez la ville si elle n'existe pas
-                    $insertQuery = $db->prepare("INSERT INTO VilleFR (ville_nom_france, Id_departement) VALUES (?, ?)");
-                    $insertQuery->execute([$user->getUserVilleUkraine(), 1]); // Remplacez 1 par l'ID du département par défaut
-                    $user->setIdVilleFR((int)$db->lastInsertId());
-                } else {
-                    $user->setIdVilleFR((int)$ville['Id_villeFR']);
-                }
-            }
-
-            // Insérez l'utilisateur
             $query = $db->prepare("INSERT INTO users (
             user_nom, 
             user_prenom, 
@@ -69,8 +55,9 @@ class UserDAO implements DAOInterface
             user_dernier_poste_france,
             user_ville_ukraine,
             user_pseudonyme,
-            user_mp
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            user_mp,
+            Id_TypeUser
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             $query->execute([
                 $user->getUserNom(),
                 $user->getUserPrenom(),
@@ -86,7 +73,8 @@ class UserDAO implements DAOInterface
                 $user->getUserDernierPosteFrance(),
                 $user->getUserVilleUkraine(),
                 $user->getUserPseudonyme(),
-                hash('sha512', $user->getUserPassword())
+                hash('sha512', $user->getUserPassword()),
+                $idTypeUser
             ]);
             $user->setUserId((int)$db->lastInsertId());
             return $user;

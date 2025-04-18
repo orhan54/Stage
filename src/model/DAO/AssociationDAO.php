@@ -7,38 +7,68 @@ use App\model\Entity\AbstractEntity;
 use App\model\Entity\AssociationEntity;
 use App\model\ModelException;
 
-class AssociationDAO implements DAOInterface {
+class AssociationDAO implements DAOInterface
+{
+    public function getVilleId(string $ville): int
+    {
+        try {
+            $db = Database::getInstance();
+            $query = $db->prepare("SELECT Id_villeFR FROM VilleFR WHERE ville_nom = ?");
+            $query->execute([$ville]);
+            $result = $query->fetch(\PDO::FETCH_ASSOC);
 
-    public function create(AbstractEntity $entity): AbstractEntity {
+            if ($result) {
+                return (int)$result['Id_villeFR'];
+            } else {
+                // Si la ville n'existe pas, insérez-la dans la base de données
+                $insertQuery = $db->prepare("INSERT INTO VilleFR (ville_nom, Id_departement) VALUES (?, ?)");
+                $insertQuery->execute([$ville, 1]); // Remplacez `1` par l'ID de département approprié
+                return (int)$db->lastInsertId();
+            }
+        } catch (\PDOException $e) {
+            throw new ModelException("Erreur lors de la récupération ou de l'insertion de l'ID de la ville : " . $e->getMessage());
+        }
+    }
+
+    public function create(AbstractEntity $entity): AbstractEntity
+    {
         /** @var AssociationEntity $association */
         $association = $entity;
         try {
             $db = Database::getInstance();
-            $query = $db->prepare("INSERT INTO association (
-                nom_association,
-                nom_president,
-                adresse_email,
-                numero_siret,
-                telephone,
-                instagram,
-                facebook,
-                telegram,
-                site_web,
-                logo_association,
-                photo_association
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $query = $db->prepare("INSERT INTO Association (
+            association_nom,
+            association_president,
+            association_telephone,
+            association_email,
+            association_date,
+            association_facebook,
+            association_instagram,
+            association_telegram,
+            association_description_FR,
+            association_siret,
+            association_site_web,
+            association_logo,
+            association_photo,
+            association_mp,
+            Id_villeFR
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             $query->execute([
-                $association->getNomAssociation(),
-                $association->getNomPresident(),
-                $association->getAdresseEmail(),
-                $association->getNumeroSiret(),
-                $association->getTelephone(),
-                $association->getInstagram(),
-                $association->getFacebook(),
-                $association->getTelegram(),
-                $association->getSiteWeb(),
-                $association->getLogoAssociation(),
-                $association->getPhotoAssociation()
+                $association->getAssociationNom(),
+                $association->getAssociationPresident(),
+                $association->getAssociationTelephone(),
+                $association->getAssociationEmail(),
+                date('Y-m-d H:i:s'), // Date actuelle
+                $association->getAssociationFacebook(),
+                $association->getAssociationInstagram(),
+                $association->getAssociationTelegram(),
+                $association->getAssociationDescriptionFR(),
+                $association->getAssociationSiret(),
+                $association->getAssociationSiteWeb(),
+                $association->getAssociationLogo(),
+                $association->getAssociationPhoto(),
+                password_hash($association->getAssociationMp(), PASSWORD_BCRYPT), // Hash du mot de passe
+                $association->getIdVilleFR()
             ]);
             $association->setId($db->lastInsertId());
             return $association;
@@ -47,34 +77,41 @@ class AssociationDAO implements DAOInterface {
         }
     }
 
-    public function readOne(int $id): AbstractEntity {
+    public function readOne(int $id): AbstractEntity
+    {
         try {
             $db = Database::getInstance();
-            $query = $db->prepare("SELECT * FROM association WHERE id = ?");
+            $query = $db->prepare("SELECT * FROM Association WHERE id = ?");
             $query->execute([$id]);
             $data = $query->fetch(\PDO::FETCH_ASSOC);
 
+            $idVilleFR = $_POST['Id_villeFR'];
             $association = new AssociationEntity();
             $association
-                ->setId($data['id'])
-                ->setNomAssociation($data['nom_association'])
-                ->setNomPresident($data['nom_president'])
-                ->setAdresseEmail($data['adresse_email'])
-                ->setNumeroSiret($data['numero_siret'])
-                ->setTelephone($data['telephone'])
-                ->setInstagram($data['instagram'])
-                ->setFacebook($data['facebook'])
-                ->setTelegram($data['telegram'])
-                ->setSiteWeb($data['site_web'])
-                ->setLogoAssociation($data['logo_association'])
-                ->setPhotoAssociation($data['photo_association']);
+                ->setId($data['Id_association'])
+                ->setAssociationNom($data['association_nom'])
+                ->setAssociationPresident($data['association_president'])
+                ->setAssociationTelephone($data['association_telephone'])
+                ->setAssociationEmail($data['association_email'])
+                ->setAssociationDate($data['association_date'])
+                ->setAssociationFacebook($data['association_facebook'])
+                ->setAssociationInstagram($data['association_instagram'])
+                ->setAssociationTelegram($data['association_telegram'])
+                ->setAssociationDescriptionFR($data['association_description_FR'])
+                ->setAssociationSiret($data['association_siret'])
+                ->setAssociationSiteWeb($data['association_site_web'])
+                ->setAssociationLogo($data['association_logo'])
+                ->setAssociationPhoto($data['association_photo'])
+                ->setAssociationMp($data['association_mp'])
+                ->setIdVilleFR($idVilleFR);
             return $association;
         } catch (\PDOException $e) {
             throw new ModelException("Erreur lors de la lecture de l'association: " . $e->getMessage());
         }
     }
 
-    public function readAll(): array {
+    public function readAll(): array
+    {
         try {
             $db = Database::getInstance();
             $query = $db->prepare("SELECT * FROM association");
@@ -86,36 +123,46 @@ class AssociationDAO implements DAOInterface {
         }
     }
 
-    public function update(AbstractEntity $entity): bool {
+    public function update(AbstractEntity $entity): bool
+    {
         /** @var AssociationEntity $association */
         $association = $entity;
         try {
             $db = Database::getInstance();
-            $query = $db->prepare("UPDATE association SET 
-                nom_association = ?,
-                nom_president = ?,
-                adresse_email = ?,
-                numero_siret = ?,
-                telephone = ?,
-                instagram = ?,
-                facebook = ?,
-                telegram = ?,
-                site_web = ?,
-                logo_association = ?,
-                photo_association = ?
+            $query = $db->prepare("UPDATE Association SET 
+                association_nom = ?,
+                association_president = ?,
+                association_telephone = ?,
+                association_email = ?,
+                association_date = ?,
+                association_facebook = ?,
+                association_instagram = ?,
+                association_telegram = ?,
+                association_description_FR = ?,
+                association_siret = ?,
+                association_site_web = ?,
+                association_logo = ?,
+                association_photo = ?,
+                association_mp = ?,
+                Id_villeFR = ?
+            )
                 WHERE id = ?");
             return $query->execute([
-                $association->getNomAssociation(),
-                $association->getNomPresident(),
-                $association->getAdresseEmail(),
-                $association->getNumeroSiret(),
-                $association->getTelephone(),
-                $association->getInstagram(),
-                $association->getFacebook(),
-                $association->getTelegram(),
-                $association->getSiteWeb(),
-                $association->getLogoAssociation(),
-                $association->getPhotoAssociation(),
+                $association->getAssociationNom(),
+                $association->getAssociationPresident(),
+                $association->getAssociationTelephone(),
+                $association->getAssociationEmail(),
+                $association->getAssociationDate(),
+                $association->getAssociationFacebook(),
+                $association->getAssociationInstagram(),
+                $association->getAssociationTelegram(),
+                $association->getAssociationDescriptionFR(),
+                $association->getAssociationSiret(),
+                $association->getAssociationSiteWeb(),
+                $association->getAssociationLogo(),
+                $association->getAssociationPhoto(),
+                password_hash($association->getAssociationMp(), PASSWORD_BCRYPT), // Hash du mot de passe
+                $association->getIdVilleFR(),
                 $association->getId()
             ]);
         } catch (\PDOException $e) {
@@ -123,16 +170,16 @@ class AssociationDAO implements DAOInterface {
         }
     }
 
-    public function delete(AbstractEntity $entity): bool {
+    public function delete(AbstractEntity $entity): bool
+    {
         /** @var AssociationEntity $association */
         $association = $entity;
         try {
             $db = Database::getInstance();
-            $query = $db->prepare("DELETE FROM association WHERE id = ?");
+            $query = $db->prepare("DELETE FROM Association WHERE id = ?");
             return $query->execute([$association->getId()]);
         } catch (\PDOException $e) {
             throw new ModelException("Erreur lors de la suppression de l'association: " . $e->getMessage());
         }
     }
-
 }

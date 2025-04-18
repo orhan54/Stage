@@ -35,7 +35,7 @@ body {
 }
 
 button {
-    width: 350px !important;
+    width: 200px !important;
     height: 40px !important;
 }
 
@@ -169,6 +169,9 @@ img {
     border-radius: 5px;
 }
 
+#description {
+    height: 100px;
+}
 
 /* Ajout de la classe pour la navbar */
 .navbar {

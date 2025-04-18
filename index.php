@@ -23,8 +23,7 @@ use App\controller\FinanceController;
 // enregistre les routes qui pointent vers les classes de contrôleurs
 Router::addRoute("home", new HomeController());
 Router::addRoute("registerUser", new RegisterUserController());
-Router::addRoute("validationRegister", new RegisterUserController());
-Router::addRoute("login", new RegisterAssociationController());
+Router::addRoute("registerAssociation", new RegisterAssociationController());
 Router::addRoute("finance", new FinanceController());
 
 

@@ -20,6 +20,7 @@ class UserEntity extends AbstractEntity
     private string $user_pseudonyme;
     private string $user_mp;
     private ?int $id_villeFR = null;
+    private ?int $idTypeUser = null;
 
     public function getUserId(): int
     {
@@ -199,4 +200,16 @@ class UserEntity extends AbstractEntity
         $this->user_mp = $user_mp;
         return $this;
     }
+
+    public function getIdTypeUser(): ?int
+    {
+        return $this->idTypeUser;
+    }
+
+    public function setIdTypeUser(?int $idTypeUser): self
+    {
+        $this->idTypeUser = $idTypeUser;
+        return $this;
+    }
+    
 }
