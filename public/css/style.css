@@ -1,0 +1,480 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.pacifico-regular {
+    font-family: "Pacifico", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    background-image: url('../image/blue-and-orange-blended.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    /* Ajout de cette ligne pour fixer l'image de fond */
+}
+
+#coeur {
+    width: 40%;
+    top: 10px;
+    left: 10px;
+}
+
+#logo {
+    width: 30%;
+    display: block;
+    margin: auto;
+}
+
+button {
+    width: 200px !important;
+    height: 40px !important;
+}
+
+#btnCreeCompte {
+    height: 40px;
+    top: 60px;
+    right: 20px;
+}
+
+#btnCreeCompte>a {
+    font-size: 18px !important;
+}
+
+#btnCreeCompte>a:hover {
+    background-color: yellow !important;
+    color: blue !important;
+}
+
+p {
+    font-size: 18px !important;
+}
+
+.card {
+    height: 320px;
+}
+
+.card .card-footer>a:hover {
+    background-color: yellow !important;
+    color: blue !important;
+}
+
+.card-body>p {
+    font-size: 18px !important;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 100%;
+    margin: auto;
+}
+
+h2 {
+    font-family: Pacifico;
+    text-align: center;
+}
+
+h4 {
+    font-family: Pacifico;
+}
+
+a {
+    font-size: 18px !important;
+}
+
+h2 {
+    margin-top: 80px;
+    font-size: 50px;
+    margin-bottom: 50px;
+}
+
+.nav-item>a:hover {
+    color: yellow !important;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    margin: auto;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 70%;
+}
+
+img {
+    width: 400px;
+    height: 200px;
+}
+
+.evenement img {
+    width: 100%;
+    height: 80% !important;
+}
+
+#map {
+    float: right;
+    position: relative;
+}
+
+#drapeau {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 250px;
+}
+
+#card-association>.card-img-top {
+    padding: 50px;
+}
+
+#ada {
+    border: 2px solid black;
+    box-shadow: 2px 2px 20px black;
+}
+
+#card-association {
+    box-shadow: 2px 2px 20px black;
+    margin-top: 60px;
+    margin-bottom: 50px;
+    height: 780px;
+}
+
+#travail .card {
+    min-height: fit-content;
+    max-height: 450px;
+    margin-bottom: 20px;
+}
+
+#travail card-salaire-contrat p {
+    background-color: rgb(226, 226, 226);
+    border-radius: 5px;
+}
+
+#card-salaire {
+    background-color: rgb(226, 226, 226);
+    border-radius: 5px;
+}
+
+#card-contrat {
+    background-color: rgb(226, 226, 226);
+    border-radius: 5px;
+}
+
+#card-reponse {
+    background-color: rgba(232, 243, 252, 255);
+    border-radius: 5px;
+}
+
+#description {
+    height: 100px;
+}
+
+/* Ajout de la classe pour la navbar */
+.navbar {
+    margin-top: 60px;
+    background-color: rgba(0, 0, 255, 0.5) !important;
+    /* Utilisation de rgba pour la transparence */
+    backdrop-filter: blur(10px);
+    /* Ajout de l'effet de flou */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Espacement des liens de la navbar */
+.navbar-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+}
+
+.navbar-nav .nav-item {
+    margin-right: 15px;
+}
+
+
+
+
+/* Style pour les cartes d'événements */
+.event-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    background-color: #fff;
+    height: 100%;
+    width: 100%;
+}
+
+.event-link {
+    color: inherit;
+    display: block;
+    height: 100%;
+}
+
+.event-link:hover {
+    color: inherit;
+    text-decoration: none;
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.event-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.event-card:hover {
+    transform: scale(1.05);
+}
+
+.event-header {
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.event-title {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.event-description {
+    color: #6c757d;
+    margin-bottom: 0;
+}
+
+/* Conteneur des événements pour le centrage et l'espacement */
+.events-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .event-image {
+        height: 160px;
+    }
+}
+
+@media (min-width: 992px) {
+    /* Pour les écrans PC et plus grands */
+    .event-card-wrapper {
+        max-width: 32%; /* Cartes plus petites */
+        margin-left: 75px; /* Moitié de l'espace souhaité */
+        margin-right: 75px; /* Moitié de l'espace souhaité */
+    }
+    
+    /* Réduire la taille de l'image pour les écrans plus petits */
+    .event-image {
+        height: 160px;
+    }
+    
+    /* Ajuster l'espacement vertical entre les cartes */
+    .mb-4 {
+        margin-bottom: 2rem !important;
+    }
+    
+    /* Assurer que les cartes sont bien alignées */
+    .row.justify-content-center {
+        margin-left: -75px;
+        margin-right: -75px;
+    }
+}
+
+@media (min-width: 1200px) {
+    /* Pour les très grands écrans, ajuster légèrement */
+    .event-image {
+        height: 180px;
+    }
+}
+
+
+
+/* Masquer l'élément avec l'ID #coeur sur les écrans de moins de 768px */
+@media (min-width: 300px) and (max-width: 767px) {
+    #coeur {
+        display: none;
+    }
+
+    #drapeau {
+        display: none;
+    }
+
+    #btnCreeCompte>a {
+        display: none;
+    }
+
+    #map {
+        margin: auto;
+    }
+
+    #logo {
+        width: 80%;
+    }
+
+    h2 {
+        font-size: 28px;
+    }
+
+    p {
+        font-size: 12px !important;
+    }
+
+    section {
+        display: flex;
+        flex-direction: column;
+    }
+
+    img {
+        width: 100%;
+    }
+
+}
+
+/* Masquer l'élément avec l'ID #coeur sur les écrans de moins de 1024px */
+@media (min-width: 768px) and (max-width: 1023px) {
+    #coeur {
+        display: none;
+    }
+
+    #map {
+        margin: auto;
+    }
+
+    #drapeau {
+        display: none;
+    }
+
+    #btnCreeCompte>a {
+        display: none;
+    }
+
+    #logo {
+        width: 80%;
+    }
+
+}
+
+/* Masquer l'élément avec l'ID #coeur sur les écrans de moins de 1024px */
+@media (min-width: 1024px) and (max-width: 1440px) {
+
+    #map {
+        margin: auto;
+    }
+
+    #coeur {
+        width: 150px;
+    }
+
+    #logo {
+        width: 60%;
+    }
+
+    #drapeau {
+        width: 180px;
+        height: 100px;
+    }
+
+    #btnCreeCompte>a {
+        font-size: 12px !important;
+    }
+
+    #btnHamburgerCompte>a {
+        display: none;
+    }
+
+}
+
+/* Masquer l'élément avec l'ID #coeur sur les écrans de moins de 1024px */
+@media (min-width: 1441px) and (max-width: 2559px) {
+
+    #map {
+        margin: auto;
+    }
+
+    #coeur {
+        width: 150px;
+    }
+
+    #logo {
+        width: 60%;
+    }
+
+    #drapeau {
+        width: 180px;
+        height: 100px;
+    }
+
+    #btnCreeCompte>a {
+        font-size: 14px !important;
+    }
+
+    p {
+        font-size: 18px !important;
+    }
+
+    section img {
+        height: 300px !important;
+    }
+
+    #btnHamburgerCompte>a {
+        display: none;
+    }
+}
+
+/* Masquer l'élément avec l'ID #coeur sur les écrans de moins de 1024px */
+@media (min-width: 2560px) and (max-width: 3500px) {
+
+    #coeur {
+        width: 150px;
+    }
+
+    #logo {
+        width: 60%;
+    }
+
+    #drapeau {
+        width: 180px;
+        height: 100px;
+        margin-bottom: 40px;
+    }
+
+    #btnHamburgerCompte>a {
+        font-size: 14px !important;
+    }
+
+    p {
+        font-size: 25px;
+    }
+
+    section img {
+        height: 400px !important;
+    }
+
+    #btnHamburgerCompte>a {
+        display: none;
+    }
+}

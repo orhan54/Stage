@@ -1,0 +1,17 @@
+{
+    "name": "orhan/stage",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Cicek Orhan",
+            "email": "orhancicek1985@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "*"
+    }
+}
